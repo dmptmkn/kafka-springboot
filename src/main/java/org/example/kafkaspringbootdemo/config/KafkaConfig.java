@@ -2,7 +2,7 @@ package org.example.kafkaspringbootdemo.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.example.kafkaspringbootdemo.event.ProductCreatedEvent;
+import org.example.kafkacore.event.ProductCreatedEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +36,7 @@ public class KafkaConfig {
     @Value("${spring.kafka.producer.properties.request.timeout.ms}")
     private String requestTimeout;
 
-    Map<String, Object> producerConfigs() {
+    Map<String, Object> producerConfig() {
         Map<String, Object> producerConfig = new HashMap<>();
         producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
@@ -53,7 +53,7 @@ public class KafkaConfig {
 
     @Bean
     ProducerFactory<String, ProductCreatedEvent> producerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfigs());
+        return new DefaultKafkaProducerFactory<>(producerConfig());
     }
 
     @Bean

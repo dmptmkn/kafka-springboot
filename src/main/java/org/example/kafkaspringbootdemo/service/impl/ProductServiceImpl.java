@@ -1,8 +1,8 @@
 package org.example.kafkaspringbootdemo.service.impl;
 
 import org.apache.kafka.clients.producer.RecordMetadata;
+import org.example.kafkacore.event.ProductCreatedEvent;
 import org.example.kafkaspringbootdemo.dto.CreateProductDto;
-import org.example.kafkaspringbootdemo.event.ProductCreatedEvent;
 import org.example.kafkaspringbootdemo.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +29,9 @@ public class ProductServiceImpl implements ProductService {
         String productId = UUID.randomUUID().toString();
         ProductCreatedEvent productCreatedEvent = new ProductCreatedEvent(
                 productId,
-                createProductDto.getTitle(),
-                createProductDto.getPrice(),
-                createProductDto.getQuantity()
+                createProductDto.title(),
+                createProductDto.price(),
+                createProductDto.quantity()
         );
 
         SendResult<String, ProductCreatedEvent> sendResult = kafkaTemplate
