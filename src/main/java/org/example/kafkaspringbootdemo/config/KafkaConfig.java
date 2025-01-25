@@ -25,6 +25,10 @@ public class KafkaConfig {
     private String valueSerializer;
     @Value("${spring.kafka.producer.acks}")
     private String acks;
+    @Value("${spring.kafka.producer.properties.enable.idempotence}")
+    private String enableIdempotence;
+    @Value("${spring.kafka.producer.properties.max.in.flight.requests.per.connection}")
+    private String maxInFlightRequests;
     @Value("${spring.kafka.producer.properties.linger.ms}")
     private String linger;
     @Value("${spring.kafka.producer.properties.delivery.timeout.ms}")
@@ -37,6 +41,8 @@ public class KafkaConfig {
         producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
         producerConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, valueSerializer);
+        producerConfig.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, enableIdempotence);
+        producerConfig.put(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, maxInFlightRequests);
         producerConfig.put(ProducerConfig.ACKS_CONFIG, acks);
         producerConfig.put(ProducerConfig.LINGER_MS_CONFIG, linger);
         producerConfig.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, deliveryTimeout);
