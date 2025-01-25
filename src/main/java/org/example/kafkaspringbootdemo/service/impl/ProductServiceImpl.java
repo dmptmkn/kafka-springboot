@@ -38,13 +38,9 @@ public class ProductServiceImpl implements ProductService {
                 .send("product-created-events-topic", productId, productCreatedEvent)
                 .get();
         RecordMetadata recordMetadata = sendResult.getRecordMetadata();
-
-        logger.info(
-                """
-                Topic: {}
-                Partition: {}
-                Offset: {}
-                """, recordMetadata.topic(), recordMetadata.partition(), recordMetadata.offset());
+        logger.info("Topic: {}", recordMetadata.topic());
+        logger.info("Partition: {}", recordMetadata.partition());
+        logger.info("Offset: {}", recordMetadata.offset());
         logger.info("Return: {}", productId);
 
         return productId;
