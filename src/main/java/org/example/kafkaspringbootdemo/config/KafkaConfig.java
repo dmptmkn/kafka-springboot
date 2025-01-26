@@ -36,7 +36,8 @@ public class KafkaConfig {
     @Value("${spring.kafka.producer.properties.request.timeout.ms}")
     private String requestTimeout;
 
-    Map<String, Object> producerConfig() {
+    @Bean
+    ProducerFactory<String, ProductCreatedEvent> producerFactory() {
         Map<String, Object> producerConfig = new HashMap<>();
         producerConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         producerConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, keySerializer);
@@ -48,12 +49,7 @@ public class KafkaConfig {
         producerConfig.put(ProducerConfig.DELIVERY_TIMEOUT_MS_CONFIG, deliveryTimeout);
         producerConfig.put(ProducerConfig.REQUEST_TIMEOUT_MS_CONFIG, requestTimeout);
 
-        return producerConfig;
-    }
-
-    @Bean
-    ProducerFactory<String, ProductCreatedEvent> producerFactory() {
-        return new DefaultKafkaProducerFactory<>(producerConfig());
+        return new DefaultKafkaProducerFactory<>(producerConfig);
     }
 
     @Bean
